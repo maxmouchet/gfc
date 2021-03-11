@@ -5,8 +5,7 @@
 // The speck code is a cut down version of https://github.com/madmo/speck,
 // licensed under the ISC license.
 #define SPECK_TYPE uint32_t
-/* #define SPECK_ROUNDS 27 */
-#define SPECK_ROUNDS 16
+#define SPECK_ROUNDS 27
 #define SPECK_KEY_LEN 4
 
 #define ROR(x, r) ((x >> r) | (x << ((sizeof(SPECK_TYPE) * 8) - r)))
