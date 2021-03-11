@@ -7,6 +7,8 @@
 It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function.  
 The Speck implementation is from [madmo/speck](https://github.com/madmo/speck) and is licensed under the ISC license (MIT-compatible).
 
+This implementation is not cryptographically-secure as we use only 16 rounds of Speck instead of 27 ([`#define SPECK_ROUNDS 16`](https://github.com/maxmouchet/gfc/blob/main/src/gfc.c)).
+
 ### C API
 
 ```c
