@@ -1,7 +1,9 @@
 # gfc
 
-(Partial) implementation of a Generalized-Feistel Cipher [1, alg. 3] for generating random permutations.
-It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function.
+[![build](https://github.com/maxmouchet/gfc/actions/workflows/build.yml/badge.svg)](https://github.com/maxmouchet/gfc/actions/workflows/build.yml)
+
+(Partial) implementation of a Generalized-Feistel Cipher [1, alg. 3] for generating random permutations.  
+It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function.  
 The Speck implementation is from [madmo/speck](https://github.com/madmo/speck) and is licensed under the ISC license (MIT-compatible).
 
 ```c

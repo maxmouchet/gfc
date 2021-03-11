@@ -7,9 +7,17 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.6'
       - name: Install build tools
         run: sudo apt-get install build-essential cmake
-      - name: Test
+      - name: Test C library
         run: |
           mkdir build && cd build
           cmake .. && cmake --build . && ./gfc_test
+      - name: Run Python bindings
+        run: |
+          pip install -e .
+          pip install pytest
+          pytest

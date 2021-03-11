@@ -52,3 +52,7 @@ Mkfile.old
 dkms.conf
 
 build/
+dist/
+python/*.c
+*.egg-info/
+__pycache__/

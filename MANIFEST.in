@@ -1,0 +1,4 @@
+global-include *.h
+global-include *.pyx
+global-include *.pxd
+include pyproject.toml
