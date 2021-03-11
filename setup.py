@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pygfc",
-    version="0.1.0",
+    version="0.1.1",
     author="Maxime Mouchet",
     author_email="max@maxmouchet.com",
     description="(Partial) implementation of a Generalized-Feistel Cipher for generating random permutations.",

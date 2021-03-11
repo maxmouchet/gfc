@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(gfc VERSION 0.1.0)
+project(gfc VERSION 0.1.1)
 
 add_library(gfc src/gfc.c)
 target_compile_options(gfc PRIVATE -Wall -Wextra -pedantic)
