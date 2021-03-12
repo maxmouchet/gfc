@@ -44,15 +44,15 @@ void speck_encrypt(SPECK_TYPE const pt[static 2], SPECK_TYPE ct[static 2],
 // with a block size of 64 bits and a key size of 128 bits.
 
 // This is the random function F_j(R) in the paper.
-uint64_t F(GFC *gfc, uint64_t j, uint64_t R) {
+uint64_t F(GFC *gfc, const uint64_t j, const uint64_t R) {
   uint64_t enc;
-  uint32_t *key = gfc->speck_exp + (j - 1) * SPECK_ROUNDS;
-  speck_encrypt((uint32_t *)&R, (uint32_t *)&enc, key);
+  const uint32_t *key = gfc->speck_exp + (j - 1) * SPECK_ROUNDS;
+  speck_encrypt((const uint32_t *)&R, (uint32_t *)&enc, key);
   return enc;
 }
 
 // This is the function fe[r,a,b]_K(m) in the paper.
-uint64_t fe(GFC *gfc, uint64_t m) {
+uint64_t fe(GFC *gfc, const uint64_t m) {
   uint64_t L, R, tmp;
 
   L = m % gfc->a;
@@ -82,14 +82,14 @@ GFC *gfc_init(uint64_t range, uint64_t rounds, uint64_t seed) {
   gfc->r = rounds;
   // Compute the constants a and b such that ab >= range,
   // according to the method of Section 6.
-  double tmp = ceil(sqrt((double)range));
+  const double tmp = ceil(sqrt((double)range));
   gfc->a = (uint64_t)tmp;
   gfc->b = (uint64_t)tmp;
   // Precompute the speck round keys
   gfc->speck_exp = calloc(gfc->r * SPECK_ROUNDS, sizeof(uint32_t));
   for (uint64_t i = 0; i < gfc->r; i++) {
-    uint64_t key[2] = {seed, i};
-    speck_expand((uint32_t *)key, gfc->speck_exp + i * SPECK_ROUNDS);
+    const uint64_t key[2] = {seed, i};
+    speck_expand((const uint32_t *)key, gfc->speck_exp + i * SPECK_ROUNDS);
   }
   return gfc;
 }
@@ -100,7 +100,7 @@ void gfc_destroy(GFC *gfc) {
 }
 
 // This is the function Fe[r,a,b]_K(m) in the paper.
-uint64_t gfc_encrypt(GFC *gfc, uint64_t m) {
+uint64_t gfc_encrypt(GFC *gfc, const uint64_t m) {
   uint64_t c = fe(gfc, m);
   while (c >= gfc->M) {
     c = fe(gfc, c);

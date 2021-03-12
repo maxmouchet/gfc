@@ -54,5 +54,7 @@ dkms.conf
 build/
 dist/
 python/*.c
+.idea
 *.egg-info/
 __pycache__/
+cmake-build*/
