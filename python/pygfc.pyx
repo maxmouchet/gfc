@@ -12,8 +12,12 @@ cdef extern from "gfc/gfc.h":
     uint64_t gfc_encrypt(GFC* gfc, uint64_t m)
 
 
-class Permutation:
-    def __init__(self, range, rounds, seed):
+cdef class Permutation:
+    cdef uint64_t range
+    cdef uint64_t rounds
+    cdef uint64_t seed
+
+    def __init__(self, uint64_t range, uint64_t rounds, uint64_t seed):
         self.range = range
         self.rounds = rounds
         self.seed = seed
@@ -26,24 +30,27 @@ class Permutation:
 
 
 cdef class PermutationIterator:
-    cdef uint64_t _counter
-    cdef uint64_t _range
-    cdef GFC* _perm;
+    cdef uint64_t counter
+    cdef uint64_t range
+    cdef GFC* perm;
 
-    def __cinit__(self, range, rounds, seed):
-        self._counter = 0
-        self._range = range
-        self._perm = gfc_init(range, rounds, seed)
+    def __cinit__(self, uint64_t range, uint64_t rounds, uint64_t seed):
+        self.counter = 0
+        self.range = range
+        self.perm = gfc_init(range, rounds, seed)
 
     def __dealloc__(self):
-        gfc_destroy(self._perm)
+        gfc_destroy(self.perm)
 
     def __iter__(self):
         return self
 
+    def __len__(self):
+        return self.range
+
     def __next__(self):
-        if self._counter >= self._range:
+        if self.counter >= self.range:
             raise StopIteration
-        enc = gfc_encrypt(self._perm, self._counter)
-        self._counter += 1
+        enc = gfc_encrypt(self.perm, self.counter)
+        self.counter += 1
         return enc
