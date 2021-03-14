@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
-project(gfc VERSION 0.1.1)
+project(
+  gfc
+  VERSION 0.1.1
+  LANGUAGES C
+)
 
 option(WITH_SANITIZER "Enable compiler sanitizers" OFF)
 
@@ -9,6 +13,7 @@ if(WITH_SANITIZER)
 endif()
 
 add_library(gfc src/gfc.c)
+target_compile_features(gfc PUBLIC c_std_99)
 target_compile_options(gfc PRIVATE -Wall -Wextra -pedantic)
 target_include_directories(gfc PUBLIC "${PROJECT_SOURCE_DIR}/include")
 target_link_libraries(gfc PRIVATE m)
