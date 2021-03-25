@@ -15,7 +15,7 @@ jobs:
       - name: Test C library
         run: |
           mkdir build && cd build
-          cmake .. && cmake --build . && ./gfc_test
+          cmake -DWITH_SANITIZER=ON .. && cmake --build . && ./gfc_test
       - name: Run Python bindings
         run: |
           pip install -e .
