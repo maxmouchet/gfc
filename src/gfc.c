@@ -103,6 +103,9 @@ uint64_t fe_inv(const GFC *gfc, const uint64_t m) {
 
 GFC *gfc_init(uint64_t range, uint64_t rounds, uint64_t seed) {
   GFC *gfc = calloc(1, sizeof(GFC));
+  if (gfc == NULL) {
+    return NULL;
+  }
   gfc->M = range;
   gfc->r = rounds;
   // Compute the constants a and b such that ab >= range,
