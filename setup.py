@@ -9,7 +9,7 @@ setup(
     version="0.1.2",
     author="Maxime Mouchet",
     author_email="max@maxmouchet.com",
-    description="(Partial) implementation of a Generalized-Feistel Cipher for generating random permutations.",
+    description="Implementation of a Generalized-Feistel Cipher for generating random permutations.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/maxmouchet/gfc",

@@ -44,7 +44,7 @@ void speck_encrypt(SPECK_TYPE const pt[static 2], SPECK_TYPE ct[static 2],
 // with a block size of 64 bits and a key size of 128 bits.
 
 // This is the random function F_j(R) in the paper.
-uint64_t F(GFC *gfc, const uint64_t j, const uint64_t R) {
+uint64_t F(const GFC *gfc, const uint64_t j, const uint64_t R) {
   uint64_t enc;
   const uint32_t *key = gfc->speck_exp + (j - 1) * SPECK_ROUNDS;
   speck_encrypt((const uint32_t *)&R, (uint32_t *)&enc, key);
@@ -52,7 +52,7 @@ uint64_t F(GFC *gfc, const uint64_t j, const uint64_t R) {
 }
 
 // This is the function fe[r,a,b]_K(m) in the paper.
-uint64_t fe(GFC *gfc, const uint64_t m) {
+uint64_t fe(const GFC *gfc, const uint64_t m) {
   uint64_t L, R, tmp;
 
   L = m % gfc->a;
@@ -74,6 +74,31 @@ uint64_t fe(GFC *gfc, const uint64_t m) {
   } else {
     return gfc->a * R + L;
   }
+}
+
+// This is the function fe^-1[r,a,b]_K(m) in the paper.
+uint64_t fe_inv(const GFC *gfc, const uint64_t m) {
+  uint64_t L, R, tmp;
+
+  if (gfc->r & 1) {
+    R = m % gfc->a;
+    L = m / gfc->a;
+  } else {
+    L = m % gfc->a;
+    R = m / gfc->a;
+  }
+
+  for (uint64_t j = gfc->r; j >= 1; j--) {
+    if (j & 1) {
+      tmp = (R - F(gfc, j, L)) % gfc->a;
+    } else {
+      tmp = (R - F(gfc, j, L)) % gfc->b;
+    }
+    R = L;
+    L = tmp;
+  }
+
+  return gfc->a * R + L;
 }
 
 GFC *gfc_init(uint64_t range, uint64_t rounds, uint64_t seed) {
@@ -99,8 +124,17 @@ void gfc_destroy(GFC *gfc) {
   free(gfc);
 }
 
+// This is the function Fe^-1[r,a,b]_K(m) in the paper.
+uint64_t gfc_decrypt(const GFC *gfc, const uint64_t m) {
+  uint64_t c = fe_inv(gfc, m);
+  while (c >= gfc->M) {
+    c = fe_inv(gfc, c);
+  }
+  return c;
+}
+
 // This is the function Fe[r,a,b]_K(m) in the paper.
-uint64_t gfc_encrypt(GFC *gfc, const uint64_t m) {
+uint64_t gfc_encrypt(const GFC *gfc, const uint64_t m) {
   uint64_t c = fe(gfc, m);
   while (c >= gfc->M) {
     c = fe(gfc, c);

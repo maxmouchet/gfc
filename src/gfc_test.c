@@ -8,6 +8,10 @@ int test_range(uint64_t range, uint64_t rounds) {
   GFC* gfc = gfc_init(range, rounds, 42);
   for (uint64_t i = 0; i < range; i++) {
     uint64_t enc = gfc_encrypt(gfc, i);
+    uint64_t dec = gfc_decrypt(gfc, enc);
+    if (dec != i) {
+      printf("dec[%llu] = %llu\n", i, dec);
+    }
     counts[enc]++;
   }
   for (uint64_t i = 0; i < range; i++) {
