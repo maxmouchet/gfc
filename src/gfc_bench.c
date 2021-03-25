@@ -6,12 +6,12 @@
 
 double benchmark_dec(uint64_t range, uint64_t rounds, uint64_t seed,
                      uint64_t count) {
-  uint64_t enc;
+  uint64_t dec;
   GFC *gfc = gfc_init(range, rounds, seed);
 
   clock_t start = clock();
   for (uint64_t i = 0; i < count; i++) {
-    enc = gfc_decrypt(gfc, i);
+    dec = gfc_decrypt(gfc, i);
   }
   clock_t end = clock();
   double seconds = (double)(end - start) / CLOCKS_PER_SEC;
