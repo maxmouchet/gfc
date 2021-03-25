@@ -25,6 +25,8 @@ cdef class Permutation:
          gfc_destroy(self.perm)
 
     def __getitem__(self, uint64_t i):
+        if i >= self.range:
+            raise IndexError
         return gfc_encrypt(self.perm, i)
 
     def __iter__(self):
@@ -35,4 +37,6 @@ cdef class Permutation:
         return self.range
 
     cpdef uint64_t inv(self, uint64_t i):
+        if i >= self.range:
+            raise IndexError
         return gfc_decrypt(self.perm, i)

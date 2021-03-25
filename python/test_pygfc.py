@@ -1,3 +1,5 @@
+import pytest
+
 from pygfc import Permutation
 
 
@@ -13,3 +15,5 @@ def test_gfc():
 
     perm = Permutation(2 ** 16, 3, 42)
     assert all(perm[i] != i for i in range(range_))
+    with pytest.raises(IndexError):
+        perm[2 ** 16]
