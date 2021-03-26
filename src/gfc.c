@@ -90,9 +90,13 @@ uint64_t fe_inv(const GFC *gfc, const uint64_t m) {
 
   for (uint64_t j = gfc->r; j >= 1; j--) {
     if (j & 1) {
-      tmp = (R - F(gfc, j, L)) % gfc->a;
+      // We apply the same trick as the following impl. to prevent underflows:
+      // https://github.com/urbit/urbit-ob/blob/master/src/internal/ob.js#L152-L157
+      tmp = (R + gfc->a - (F(gfc, j, L) % gfc->a)) % gfc->a;
+      // tmp = (R - tmp) % gfc->a;
     } else {
-      tmp = (R - F(gfc, j, L)) % gfc->b;
+      tmp = (R + gfc->b - (F(gfc, j, L) % gfc->b)) % gfc->b;
+      // tmp = (R - tmp) % gfc->b;
     }
     R = L;
     L = tmp;
