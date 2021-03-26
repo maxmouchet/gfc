@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(
   gfc
-  VERSION 0.1.1
+  VERSION 0.2.1
   LANGUAGES C
 )
 
