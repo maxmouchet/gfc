@@ -3,8 +3,9 @@
 [![build](https://github.com/maxmouchet/gfc/actions/workflows/build.yml/badge.svg)](https://github.com/maxmouchet/gfc/actions/workflows/build.yml)
 [![PyPI](https://img.shields.io/pypi/v/pygfc)](https://pypi.org/project/pygfc/)
 
-gfc is a C implementation of a Generalized-Feistel Cipher [1, alg. 3] for generating random permutations.  
-It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function, and can generate permutations up to `2^64`.  
+gfc is a C implementation of a Generalized-Feistel Cipher [[1, alg. 3]](#1) for generating random permutations.  
+It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function, and can generate permutations with up to `2^64` elements.  
+The permutation is computed, and reversed, _on-the-fly_, without any mutable state and by using very little memory.
 
 ## Usage
 
@@ -74,11 +75,11 @@ assert set(perm) == set(range(2 ** 16))
 assert all(perm.inv(perm[i]) == i for i in range(2 ** 16))
 ```
 
-### Dependencies
+## Dependencies
 
 The Speck implementation is from [madmo/speck](https://github.com/madmo/speck) and is licensed under the ISC license (MIT-compatible).  
 
-### References
+## References
 
-[1] Black, John, and Phillip Rogaway. "Ciphers with arbitrary finite domains." _Cryptographers’ track at the RSA conference_. Springer, Berlin, Heidelberg, 2002.
+<a id="1">[1]</a> Black, John, and Phillip Rogaway. "Ciphers with arbitrary finite domains." _Cryptographers’ track at the RSA conference_. Springer, Berlin, Heidelberg, 2002.
 https://web.cs.ucdavis.edu/~rogaway/papers/subset.pdf
