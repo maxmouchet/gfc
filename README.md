@@ -6,7 +6,11 @@
 gfc is a C implementation of a Generalized-Feistel Cipher [1, alg. 3] for generating random permutations.  
 It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function, and can generate permutations up to `2^64`.  
 
-### C API
+## Usage
+
+### C / C++
+
+#### API
 
 ```c
 #include <gfc/gfc.h>
@@ -16,7 +20,51 @@ uint64_t gfc_decrypt(const GFC* gfc, uint64_t m);
 uint64_t gfc_encrypt(const GFC* gfc, uint64_t m);
 ```
 
-### Python API
+#### Example
+
+```c
+// main.c
+// gcc -Iinclude/ src/gfc.c main.c -o main
+#include <assert.h>
+#include <gfc/gfc.h>
+
+int main() {
+  GFC* gfc = gfc_init(65536, 6, 42);
+  
+  for (uint64_t i = 0; i < 65536; i++) {
+    uint64_t enc = gfc_encrypt(gfc, i);
+    uint64_t dec = gfc_decrypt(gfc, enc);
+    assert(enc != i);
+    assert(dec == i);
+  }
+
+  gfc_destroy(gfc);
+  return 0;
+}
+```
+
+#### CMake Integration
+
+```cmake
+cmake_minimum_required(VERSION 3.12)
+project(example)
+add_subdirectory(gfc)
+add_executable(main main.c)
+target_link_libraries(main PRIVATE gfc)
+```
+
+```bash
+git submodule add https://github.com/maxmouchet/gfc.git
+mkdir build && cd build
+cmake .. && cmake --build .
+./main
+```
+
+### Python
+
+```
+pip install pygfc
+```
 
 ```python
 from pygfc import Permutation
