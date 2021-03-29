@@ -1,9 +1,9 @@
-# gfc
+# 🎲 gfc — fast & lazy random permutations
 
 [![build](https://github.com/maxmouchet/gfc/actions/workflows/build.yml/badge.svg)](https://github.com/maxmouchet/gfc/actions/workflows/build.yml)
 [![PyPI](https://img.shields.io/pypi/v/pygfc)](https://pypi.org/project/pygfc/)
 
-Implementation of a Generalized-Feistel Cipher [1, alg. 3] for generating random permutations.  
+gfc is a C implementation of a Generalized-Feistel Cipher [1, alg. 3] for generating random permutations.  
 It uses [Speck](https://en.wikipedia.org/wiki/Speck_%28cipher%29) 64/128 as the random function, and can generate permutations up to `2^64`.  
 
 ### C API
