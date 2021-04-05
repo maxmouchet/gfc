@@ -58,3 +58,7 @@ python/*.c
 *.egg-info/
 __pycache__/
 cmake-build*/
+
+# Rust
+rust/target/
+rust/Cargo.lock
