@@ -19,9 +19,11 @@ setup(
         ]
     ),
     classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: POSIX :: Linux",
         "Programming Language :: Cython",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
     ],
     python_requires=">=3.6",
 )
