@@ -15,14 +15,24 @@ cdef extern from "gfc/gfc.h":
 
 cdef class Permutation:
     cdef uint64_t range
+    cdef uint64_t rounds
+    cdef uint64_t seed
     cdef GFC* perm;
 
     def __init__(self, uint64_t range, uint64_t rounds, uint64_t seed):
         self.range = range
+        self.rounds = rounds
+        self.seed = seed
         self.perm = gfc_init(range, rounds, seed)
 
     def __dealloc__(self):
          gfc_destroy(self.perm)
+
+    def __getstate__(self):
+        return (self.range, self.rounds, self.seed)
+
+    def __setstate__(self, state):
+        self.__init__(*state)
 
     def __getitem__(self, uint64_t i):
         if i >= self.range:

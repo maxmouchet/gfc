@@ -1,3 +1,5 @@
+import pickle
+
 import pytest
 
 from pygfc import Permutation
@@ -17,3 +19,10 @@ def test_gfc():
     assert all(perm[i] != i for i in range(range_))
     with pytest.raises(IndexError):
         perm[2 ** 16]
+
+
+def test_pickle():
+    perm1 = Permutation(2 ** 64 - 1, 6, 2021)
+    perm2 = pickle.loads(pickle.dumps(perm1))
+    for i in range(2048):
+        assert perm1[i] == perm2[i]
