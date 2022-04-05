@@ -1,10 +1,14 @@
 name: Tests
 
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore: ['**.md']
+  pull_request:
+    paths-ignore: ['**.md']
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -16,8 +20,32 @@ jobs:
         run: |
           mkdir build && cd build
           cmake -DWITH_SANITIZER=ON .. && cmake --build . && ./gfc_test
-      - name: Run Python bindings
+      - name: Test Python bindings
         run: |
           pip install -e .
           pip install pytest
           pytest
+
+  pypi:
+    needs: [test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+      - name: Build wheels
+        uses: joerick/cibuildwheel@v2.3.1
+        with:
+          output-dir: dist
+      - uses: dioptra-io/publish-python-action@v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          upload: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          wheel: false

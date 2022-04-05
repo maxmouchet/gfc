@@ -1,6 +1,5 @@
 # 🎲 gfc — fast & lazy random permutations
 
-[![PyPI Status](https://img.shields.io/github/workflow/status/maxmouchet/gfc/PyPI?logo=github&label=pypi)](https://github.com/maxmouchet/gfc/actions/workflows/pypi.yml)
 [![Tests Status](https://img.shields.io/github/workflow/status/maxmouchet/gfc/Tests?logo=github&label=tests)](https://github.com/maxmouchet/gfc/actions/workflows/tests.yml)
 [![PyPI](https://img.shields.io/pypi/v/pygfc?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/pygfc/)
 
