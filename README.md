@@ -1,6 +1,6 @@
 # 🎲 gfc — fast & lazy random permutations
 
-[![Tests Status](https://img.shields.io/github/workflow/status/maxmouchet/gfc/Tests?logo=github&label=tests)](https://github.com/maxmouchet/gfc/actions/workflows/tests.yml)
+[![Tests Status](https://img.shields.io/github/actions/workflow/status/maxmouchet/gfc/tests.yml?logo=github&label=tests)](https://github.com/maxmouchet/gfc/actions/workflows/tests.yml)
 [![PyPI](https://img.shields.io/pypi/v/pygfc?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/pygfc/)
 
 gfc is a C implementation of a Generalized-Feistel Cipher [[1, alg. 3]](#1) for generating random permutations.  
