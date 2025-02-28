@@ -3,6 +3,7 @@ requires = ["setuptools >= 40.6.0", "Cython", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
+skip = "pp*"
 test-command = "pytest {project}/python"
 test-requires = "pytest"
 
