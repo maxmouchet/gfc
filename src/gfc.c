@@ -12,8 +12,8 @@
 #define ROL(x, r) ((x << r) | (x >> ((sizeof(SPECK_TYPE) * 8) - r)))
 #define R(x, y, k) (x = ROR(x, 8), x += y, x ^= k, y = ROL(y, 3), y ^= x)
 
-void speck_expand(SPECK_TYPE const K[static SPECK_KEY_LEN],
-                  SPECK_TYPE S[static SPECK_ROUNDS]) {
+void speck_expand(SPECK_TYPE const K[SPECK_KEY_LEN],
+                  SPECK_TYPE S[SPECK_ROUNDS]) {
   SPECK_TYPE i, b = K[0];
   SPECK_TYPE a[SPECK_KEY_LEN - 1];
 
@@ -27,8 +27,8 @@ void speck_expand(SPECK_TYPE const K[static SPECK_KEY_LEN],
   }
 }
 
-void speck_encrypt(SPECK_TYPE const pt[static 2], SPECK_TYPE ct[static 2],
-                   SPECK_TYPE const K[static SPECK_ROUNDS]) {
+void speck_encrypt(SPECK_TYPE const pt[2], SPECK_TYPE ct[2],
+                   SPECK_TYPE const K[SPECK_ROUNDS]) {
   SPECK_TYPE i;
   ct[0] = pt[0];
   ct[1] = pt[1];
