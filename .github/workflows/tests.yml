@@ -39,7 +39,7 @@ jobs:
         with:
           platforms: all
       - name: Build wheels
-        uses: joerick/cibuildwheel@v2.23.2
+        uses: joerick/cibuildwheel@v3.0.0
         with:
           output-dir: dist
       - uses: dioptra-io/publish-python-action@v1
